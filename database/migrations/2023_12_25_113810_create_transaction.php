@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->integer('order_id');
+            $table->foreignId('type');
+            $table->foreignId('from_id');
+            $table->foreignId('to_id');
+            $table->string('from_type');
+            $table->string('to_type');
+            $table->decimal('amount',2);
+            $table->decimal('balance',2);
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('transaction');
