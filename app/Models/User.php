@@ -32,9 +32,11 @@ class User extends Authenticatable
         return $this->hasMany(Transactions::class);
     }
     public function sentTransactions(){
-        return $this->hasMany(Transactions::class,['from_id','from_type'],['account_id','account_type']);
+        return $this->hasMany(Transactions::class,'to_id','account_id')
+            ->where('to_type','account_type');
     }
     public function recievedTransactions(){
-        return $this->hasMany(Transactions::class,['from_id','from_type'],['account_id','account_type']);
+        return $this->hasMany(Transactions::class,'from_id','account_id')
+            ->where('from_type','account_type');
     }
 }

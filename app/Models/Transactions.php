@@ -23,9 +23,11 @@ class Transactions extends Model
         return $this->belongsTo(User::class);
     }
     public function from(){
-        return $this->belongsTo(User::class,['from_id','from_type'],['account_id','account_type']);
+        return $this->belongsTo(User::class,'from_id','account_id')
+            ->where('from_type','account_type');
     }
     public function to(){
-        return $this->belongsTo(User::class,['from_id','from_type'],['account_id','account_type']);
+        return $this->belongsTo(User::class,'to_id','account_to')
+            ->where('to_type','account_type');
     }
 }
