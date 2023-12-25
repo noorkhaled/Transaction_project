@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('account_id');
             $table->integer('account_type');
+            $table->decimal('balance',8,2);
             $table->rememberToken();
             $table->timestamps();
         });
