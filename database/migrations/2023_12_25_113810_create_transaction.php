@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('to_id');
             $table->string('from_type');
             $table->string('to_type');
-            $table->decimal('amount',2);
-            $table->decimal('balance',2);
+            $table->decimal('amount',8,2);
+            $table->decimal('balance',8,2);
             $table->timestamps();
         });
     }
