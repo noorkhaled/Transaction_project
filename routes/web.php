@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $transactions = new \App\Http\Controllers\TransactionsController();
+    $users = new \App\Http\Controllers\UserController();
+    $user = new \App\Models\Transactions();
+    dd($user);
     return view('welcome');
 });

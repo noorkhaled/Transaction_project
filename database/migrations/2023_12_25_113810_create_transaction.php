@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users','id');
             $table->integer('order_id');
-            $table->foreignId('type');
+            $table->string('type');
             $table->morphs('from');
             $table->morphs('to');
             $table->decimal('amount',8,2);
