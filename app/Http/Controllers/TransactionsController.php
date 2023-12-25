@@ -42,7 +42,7 @@ class TransactionsController extends Controller
                 'balance' => 'required|numeric',
             ]);
             $transaction->update($data);
-            return response()->json($transaction,200);
+            return response()->json($transaction,201);
         }
         public function destroy($id){
             $transaction = Transactions::findOrfail($id);

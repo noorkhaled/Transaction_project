@@ -16,10 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users','id');
             $table->integer('order_id');
             $table->foreignId('type');
-            $table->foreignId('from_id')->constrained('users','account_id');
-            $table->foreignId('to_id')->constrained('users','account_id');
-            $table->foreignId('from_type')->constrained('users','account_type');
-            $table->foreignId('to_type')->constrained('users','account_type');
+            $table->morphs('from');
+            $table->morphs('to');
             $table->decimal('amount',8,2);
             $table->decimal('balance',8,2);
             $table->timestamps();

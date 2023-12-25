@@ -9,6 +9,7 @@ class Transactions extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'user_id',
         'order_id',
         'type',
         'from_id',
@@ -23,11 +24,22 @@ class Transactions extends Model
         return $this->belongsTo(User::class);
     }
     public function from(){
-        return $this->belongsTo(User::class,'from_id','account_id')
-            ->where('from_type','account_type');
+        return $this->morphTo('from');
     }
     public function to(){
-        return $this->belongsTo(User::class,'to_id','account_to')
-            ->where('to_type','account_type');
+        return $this->morphTo('to');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($transaction){
+            $fromUser = $transaction->from;
+            $fromUser->balance -= $transaction->amount;
+            $fromUser->save();
+
+            $toUser = $transaction->to;
+            $toUser->balance += $transaction->amount;
+            $toUser->save();
+        });
     }
 }
