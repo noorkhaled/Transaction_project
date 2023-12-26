@@ -29,38 +29,38 @@ class Transactions extends Model
     public function to(){
         return $this->morphTo('to','to_type','to_id');
     }
-    public function supdateBalances()
-    {
-        $this->load('from', 'to');
-
-        if ($this->from && $this->to) {
-
-            $sender = $this->from;
-            $receiver = $this->to;
-
-            $sender->balance -= $this->amount;
-            $receiver->balance += $this->amount;
-
-            $sender->save();
-            $receiver->save();
-        }
-    }
-
-
-//    protected static function boot()
+//           public function supdateBalances()
 //    {
-//        parent::boot();
-//        static::created(function (Transactions $transaction){
-//            $transaction->load('from','to');
-//        $sender = $transaction->from;
-//        $sender->balance -= $transaction->amount;
-//        $sender->save();
+//        $this->load('from', 'to');
 //
-//        $receiver = $transaction->to;
-//        $receiver->balance += $transaction->amount;
-//        $receiver->save();
-//    });
+//        if ($this->from && $this->to) {
+//
+//            $sender = $this->from;
+//            $receiver = $this->to;
+//
+//            $sender->balance -= $this->amount;
+//            $receiver->balance += $this->amount;
+//
+//            $sender->save();
+//            $receiver->save();
+//        }
 //    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function (Transactions $transaction){
+            $transaction->load('from','to');
+        $sender = $transaction->from;
+        $sender->balance -= $transaction->amount;
+        $sender->save();
+
+        $receiver = $transaction->to;
+        $receiver->balance += $transaction->amount;
+        $receiver->save();
+    });
+    }
 
 //    protected static function boot()
 //    {

@@ -21,8 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Relation::morphMap([
-//           'user'=>User::class,
-//        ]);
+        Relation::morphMap([
+           'customer'=>User::class,
+           'merchant'=>User::class,
+           'delivery'=>User::class,
+           'admin'=>User::class,
+        ]);
     }
 }
