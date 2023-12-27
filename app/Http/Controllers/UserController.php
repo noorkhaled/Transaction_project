@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transactions;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -50,21 +51,30 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    public function destroy(User $user)
+    public function delete($id)
     {
-//        $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json(null, 204);
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'user deleted ',
+        ], 200);
     }
-    public function sentTransactions(User $user)
-    {
-        $sentTransactions = $user->sentTransactions;
-        return response()->json($sentTransactions);
-    }
+        public function sentTransactions(User $user)
+        {
+            $sentTransactions = $user->sentTransactions;
+            return response()->json($sentTransactions);
+        }
 
-    public function receivedTransactions(User $user)
-    {
-        $receivedTransactions = $user->receivedTransactions;
-        return response()->json($receivedTransactions);
-    }
+        public function receivedTransactions(User $user)
+        {
+            $receivedTransactions = $user->receivedTransactions;
+            return response()->json($receivedTransactions);
+        }
+        public function getUsersData($id){
+            $user  = User::with('sentTransactions','receivedTransactions')->find($id);
+            return response()->json($user);
+        }
 }

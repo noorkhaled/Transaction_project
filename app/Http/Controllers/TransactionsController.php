@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
 {
-//        public function index(){
-//            return Transactions::all();
-//        }
-//        public function show(Transactions $transaction){
-//            return response()->json($transaction);
-//        }
+        public function index(){
+
+            $transactions = Transactions::all();
+            return response()->json($transactions);
+        }
+        public function show(Transactions $transaction){
+            return response()->json($transaction);
+        }
         public function store(Request $request){
             try {
              $request->validate([
@@ -36,7 +38,6 @@ class TransactionsController extends Controller
                 'amount' => 'required',
                 'balance' => 'required',
             ]);
-
             $transaction = Transactions::create($request->all());
             return response()->json($transaction,201);
             }
@@ -63,9 +64,17 @@ class TransactionsController extends Controller
 //            $transaction->update($data);
 //            return response()->json($transaction,201);
 //        }
-//        public function destroy($id){
-//            $transaction = Transactions::findOrfail($id);
-//            $transaction->delelt();
-//            return response()->json(null,204);
-//        }
+
+
+    public function delete($id)
+    {
+        $transaction = Transactions::find($id);
+        if ($transaction) {
+            $transaction->delete();
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Transaction deleted ',
+        ], 200);
+    }
 }

@@ -11,7 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
     protected $fillable = [
         'name',
         'email',
@@ -31,10 +30,12 @@ class User extends Authenticatable
     public  function transactions(){
         return $this->hasMany(Transactions::class);
     }
-    public function sentTransactions(){
+    public function sentTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
         return $this->morphMany(Transactions::class,'from');
     }
-    public function recievedTransactions(){
+    public function receivedTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
         return $this->morphMany(Transactions::class,'to');
     }
 }

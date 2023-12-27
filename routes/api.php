@@ -28,5 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('users',\App\Http\Controllers\UserController::class);
 Route::get('user/{user}/sent-transaction',[\App\Http\Controllers\UserController::class,'sentTransactions']);
 Route::get('user/{user}/received-transaction',[\App\Http\Controllers\UserController::class,'receivedTransactions']);
-
+Route::delete('user/{user}',[\App\Http\Controllers\UserController::class,'delete']);
+Route::get('user/{id}/getuserdata',[\App\Http\Controllers\UserController::class,'getUsersData']);
 Route::apiResource('transactions',\App\Http\Controllers\TransactionsController::class);
+Route::post('transactions/{id}',[\App\Http\Controllers\TransactionsController::class,'delete']);
