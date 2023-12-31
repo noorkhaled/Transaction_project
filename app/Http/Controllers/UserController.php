@@ -21,34 +21,14 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-//        $data = $request->validate([
-//            'name' => 'required|string',
-//            'email' => 'required|email|unique:users,email',
-//            'password' => 'required|string',
-//            'account_id' => 'required|integer',
-//            'account_type' => 'required|string',
-//            'balance' => 'required|numeric',
-//        ]);
-
         $user = User::create($request->all());
         return response()->json($user, 201);
     }
 
     public function update(Request $request, User $user)
     {
-//        $user = User::findOrFail($id);
-
-//        $data = $request->validate([
-//            'name' => 'required|string',
-//            'email' => 'required|email|unique:users,email,'.$id,
-//            'password' => 'required|string',
-//            'account_id' => 'required|integer',
-//            'account_type' => 'required|integer',
-//            'balance' => 'required|numeric',
-//        ]);
-
         $user->update($request->all());
-        return response()->json($user, 200);
+        return response()->json($user, 201);
     }
 
     public function delete($id)
@@ -62,19 +42,38 @@ class UserController extends Controller
             'message' => 'user deleted ',
         ], 200);
     }
-        public function sentTransactions(User $user)
+        public function sentTransactions($userId)
         {
-            $sentTransactions = $user->sentTransactions;
-            return response()->json($sentTransactions);
+            $user = User::findOrFail($userId);
+
+            // Fetch transactions where 'to_id' equals the user's 'account_id'
+            $transactions = Transactions::where('from_id', $user->account_id)
+                ->get();
+
+            return response()->json($transactions,201);
         }
 
-        public function receivedTransactions(User $user)
+        public function receivedTransactions($userId)
         {
-            $receivedTransactions = $user->receivedTransactions;
-            return response()->json($receivedTransactions);
+            $user = User::findOrFail($userId);
+
+            // Fetch transactions where 'to_id' equals the user's 'account_id'
+            $transactions = Transactions::where('to_id', $user->account_id)
+                ->get();
+
+            return response()->json($transactions,201);
         }
         public function getUsersData($id){
-            $user  = User::with('sentTransactions','receivedTransactions')->find($id);
-            return response()->json($user);
+
+            $user = User::findOrfail($id);
+            $sent = $this->sentTransactions($id);
+            $receive = $this->receivedTransactions($id);
+
+            $transactions = [
+              'sent'=>$sent,
+              'received'=>$receive
+            ];
+
+            return response()->json([$user,$transactions],201);
         }
 }

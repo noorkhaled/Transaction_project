@@ -32,10 +32,10 @@ class User extends Authenticatable
     }
     public function sentTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Transactions::class,'from');
+        return $this->morphMany(Transactions::class,'from','from_type','from_id','account_id');
     }
     public function receivedTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Transactions::class,'to');
+        return $this->morphMany(Transactions::class,'to','to_type','to_id','account_id');
     }
 }
