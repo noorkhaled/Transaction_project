@@ -16,4 +16,10 @@ class Products extends Model
         'merchant_id',
     ];
     protected $table = 'products';
+    public function merchants(){
+        return $this->belongsTo(Merchants::class);
+    }
+    public function orders(){
+        return $this->belongsToMany(Orders::class);
+    }
 }

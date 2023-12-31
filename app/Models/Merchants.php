@@ -23,4 +23,19 @@ class Merchants extends Model
         'password' => 'hashed',
     ];
 
+    protected $table = 'merchants';
+
+    public function products()
+    {
+        return $this->hasMany(Products::class);
+    }
+    public function users()
+    {
+        return $this->morphMany(User::class, 'account');
+    }
+    public function orders()
+    {
+        return $this->belongsToMany(Orders::class);
+    }
+
 }

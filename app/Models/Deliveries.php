@@ -22,4 +22,15 @@ class Deliveries extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected $table = 'deliveries';
+
+    public function users()
+    {
+        return $this->morphMany(User::class, 'account');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Orders::class);
+    }
 }

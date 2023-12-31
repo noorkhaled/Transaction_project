@@ -22,4 +22,10 @@ class Admin extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected $table = 'admin';
+
+    public function users()
+    {
+        return $this->morphMany(User::class, 'account');
+    }
 }

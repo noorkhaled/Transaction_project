@@ -38,4 +38,7 @@ class User extends Authenticatable
     {
         return $this->morphMany(Transactions::class,'to','to_type','to_id','account_id');
     }
+    public function account(){
+     return $this->morphTo('account','account_type','account_id');
+ }
 }
