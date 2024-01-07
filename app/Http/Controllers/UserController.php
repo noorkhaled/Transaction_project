@@ -2,78 +2,125 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transactions;
 use App\Models\User;
+use App\Services\TransactionService;
+use App\Http\Requests\UsersRequest;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     public function index()
     {
-        $users =  User::all();
-        return response()->json($users);
+        $users = User::all();
+        if (!$users) {
+            return response()->json([
+                'success' => false,
+                'message' => "not users found"
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'users'=>$users
+        ], 201);
     }
-
-    public function show(User $user)
+    public function store(Request $request, UsersRequest $usersRequest)
     {
-        return response()->json($user);
-    }
-
-    public function store(Request $request)
-    {
+        if (!$request->validate($usersRequest->rules()))
+        {
+            return response()->json([
+                'success'=>false,
+                'message'=>'cannot create user',
+            ]);
+        }
         $user = User::create($request->all());
-        return response()->json($user, 201);
+        return response()->json([
+            'success'=> true,
+            'message' => 'user Created successfully',
+            'user' => $user
+        ], 201);
     }
-
-    public function update(Request $request, User $user)
+    public function show($userId)
     {
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => "Cannot locate user with ID: '$userId'"
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'user'=>$user
+        ], 201);
+    }
+    public function update(Request $request, User $user, UsersRequest $usersRequest)
+    {
+
+        $originalAttributes = $user->getOriginal();
+        if (!$request->validate($usersRequest->rules())) {
+            return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot update user']
+                , 201);
+        }
         $user->update($request->all());
-        return response()->json($user, 201);
+        $updatedAttributes = collect($user->getAttributes())
+            ->filter(function ($value, $key) use ($originalAttributes) {
+                return $originalAttributes[$key] != $value;
+            });
+        return response()->json([
+            'success' => true,
+            'user'=>$user,
+            'message' => 'User Updated successfully',
+            'updated attributes'=>$updatedAttributes
+            ], 201);
     }
 
     public function delete($id)
     {
         $user = User::find($id);
-        if ($user) {
-            $user->delete();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => "cannot find user with id: '$id'"
+            ], 201);
         }
+        $user->delete();
         return response()->json([
             'success' => true,
-            'message' => 'user deleted ',
-        ], 200);
+            'message' => "user with id: '$id' deleted",
+        ], 201);
     }
-        public function sentTransactions($userId)
-        {
-            $user = User::findOrFail($userId);
 
-            // Fetch transactions where 'to_id' equals the user's 'account_id'
-            $transactions = Transactions::where('from_id', $user->account_id)
-                ->get();
 
-            return response()->json($transactions,201);
-        }
 
-        public function receivedTransactions($userId)
-        {
-            $user = User::findOrFail($userId);
 
-            // Fetch transactions where 'to_id' equals the user's 'account_id'
-            $transactions = Transactions::where('to_id', $user->account_id)
-                ->get();
 
-            return response()->json($transactions,201);
-        }
-        public function getUsersData($id){
+    protected $transactionServices;
 
-            $user = User::findOrfail($id);
-            $sent = $this->sentTransactions($id);
-            $receive = $this->receivedTransactions($id);
+    public function __construct(TransactionService $transactionServices)
+    {
+        $this->transactionServices = $transactionServices;
+    }
 
-            $transactions = [
-              'sent'=>$sent,
-              'received'=>$receive
-            ];
+    public function getUsersData($id)
+    {
 
-            return response()->json([$user,$transactions],201);
-        }
+        $user = User::findOrFail($id);
+        $sent = $this->transactionServices->sentTransactions($id);
+        $receive = $this->transactionServices->receivedTransactions($id);
+        $transactions = [
+            'sent' => $sent,
+            'received' => $receive
+        ];
+
+        return response()->json([$user, $transactions], 201);
+    }
+
+    public function getUserOrders($userId)
+    {
+        $user = User::with('orders')->findOrFail($userId);
+        return response()->json($user->orders);
+    }
 }

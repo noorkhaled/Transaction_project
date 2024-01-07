@@ -27,15 +27,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected $table = 'users';
     public  function transactions(){
         return $this->hasMany(Transactions::class);
     }
-    public function sentTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
-    {
-        return $this->morphMany(Transactions::class,'from','from_type','from_id','account_id');
+    public function orders(){
+        return $this->belongsToMany(Orders::class,'order_user','user_id','order_id')
+                ->withPivot('user_type');
     }
-    public function receivedTransactions(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function sentTransactions():  \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(Transactions::class,'to','to_type','to_id','account_id');
+        return $this->morphMany(Transactions::class, 'fromable_account','fromable_account_type','fromable_account_id','account_id');
     }
+
+    public function receivedTransactions():  \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Transactions::class, 'toable_account','toable_account_type','toable_account_id','account_id');
+    }
+//    public function fromableTransactions()
+//    {
+//        return $this->belongsToMany(Transactions::class, 'transaction_user', 'user_fromable_id', 'transaction_id');
+//    }
+//
+//    public function toableTransactions()
+//    {
+//        return $this->belongsToMany(Transactions::class, 'transaction_user', 'user_toable_id', 'transaction_id');
+//    }
 }

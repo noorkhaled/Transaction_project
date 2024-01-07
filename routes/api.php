@@ -8,10 +8,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('users',\App\Http\Controllers\UserController::class);
-Route::get('user/{userId}/transactions/sent',[\App\Http\Controllers\UserController::class,'sentTransactions']);
-Route::get('user/{userId}/transactions/receive',[\App\Http\Controllers\UserController::class,'receivedTransactions']);
-Route::get('user/{id}/getuserdata',[\App\Http\Controllers\UserController::class,'getUsersData']);
-Route::delete('user/{user}',[\App\Http\Controllers\UserController::class,'delete']);
+Route::get('users/{id}/getuserdata',[\App\Http\Controllers\UserController::class,'getUsersData']);
+Route::delete('users/{user}',[\App\Http\Controllers\UserController::class,'delete']);
+Route::put('users/{user}',[\App\Http\Controllers\UserController::class,'update']);
 
 Route::apiResource('transactions',\App\Http\Controllers\TransactionsController::class);
-Route::post('transactions/{id}',[\App\Http\Controllers\TransactionsController::class,'delete']);
+Route::delete('transactions/{transaction}',[\App\Http\Controllers\TransactionsController::class,'delete']);
+Route::put('transactions/{transaction}',[\App\Http\Controllers\TransactionsController::class,'update']);
+Route::get('users/{userId}/transactions/sent',[\App\Services\TransactionService::class,'sentTransactions']);
+Route::get('users/{userId}/transactions/receive',[\App\Services\TransactionService::class,'receivedTransactions']);
+
+Route::apiResource('orders',\App\Http\Controllers\OrderController::class);
+Route::post('orders/{order_id}/users/{user_id}/{user_type}',[\App\Http\Controllers\OrderController::class,'ShowUserOrders']);
+Route::get('users/{userId}/orders', [\App\Http\Controllers\UserController::class, 'getUserOrders']);
+
