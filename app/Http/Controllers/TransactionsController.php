@@ -8,6 +8,7 @@ use App\Http\Requests\TransactionRequest;
 
 class TransactionsController extends Controller
 {
+    //Index function is used here to retrieve all transactions in DB
     public function index()
     {
         $transactions = Transactions::all();
@@ -22,6 +23,7 @@ class TransactionsController extends Controller
             'transactions'=>$transactions
             ], 201);
     }
+    //store function is to create new transaction
     public function store(Request $request, TransactionRequest $transactionRequest)
     {
         if (!$request->validate($transactionRequest->rules()))
@@ -38,6 +40,7 @@ class TransactionsController extends Controller
             'transaction' => $transaction
             ], 201);
         }
+        //show function is used to retrieve a specific transaction by it`s ID
     public function show($id)
     {
         $transaction = Transactions::find($id);
@@ -52,6 +55,7 @@ class TransactionsController extends Controller
             'transaction'=>$transaction
         ], 201);
     }
+    //update function is to first retrieve a specific transaction by ID like show give it the attributes i want to update
     public function update(Request $request, Transactions $transaction, TransactionRequest $transactionRequest)
     {
         $originalAttributes = $transaction->getOriginal();
@@ -72,6 +76,7 @@ class TransactionsController extends Controller
             'updated_attributes'=> $updatedAttributes
         ], 201);
     }
+    //delete function is used to delete a specific transaction with it`s ID
     public function delete($id)
     {
         $transaction = Transactions::find($id);

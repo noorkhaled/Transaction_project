@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
+    //Index function is used here to retrieve all users in DB
     public function index()
     {
         $users = User::all();
@@ -24,6 +24,7 @@ class UserController extends Controller
             'users'=>$users
         ], 201);
     }
+    //store function is to create new user
     public function store(Request $request, UsersRequest $usersRequest)
     {
         if (!$request->validate($usersRequest->rules()))
@@ -40,6 +41,7 @@ class UserController extends Controller
             'user' => $user
         ], 201);
     }
+    //show function is used to retrieve a specific user by it`s ID
     public function show($userId)
     {
         $user = User::find($userId);
@@ -54,9 +56,9 @@ class UserController extends Controller
             'user'=>$user
         ], 201);
     }
+    //update function is to first retrieve a specific user by ID like show give it the attributes i want to update
     public function update(Request $request, User $user, UsersRequest $usersRequest)
     {
-
         $originalAttributes = $user->getOriginal();
         if (!$request->validate($usersRequest->rules())) {
             return response()->json([
@@ -76,7 +78,7 @@ class UserController extends Controller
             'updated attributes'=>$updatedAttributes
             ], 201);
     }
-
+    //delete function is used to delete a specific user with it`s ID
     public function delete($id)
     {
         $user = User::find($id);

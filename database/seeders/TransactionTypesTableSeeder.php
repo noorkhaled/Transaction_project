@@ -14,10 +14,10 @@ class TransactionTypesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('transaction_types')->insert([
-           ['name'=>'purchase'],
+           ['name'=>'MerchantFees'],
            ['name'=>'servicesFees'],
            ['name'=>'PaymentTaxes'],
-           ['name'=>'ShippingFees'],
+           ['name'=>'DeliveryFees'],
         ]);
     }
 }
