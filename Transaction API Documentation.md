@@ -2,7 +2,12 @@
 <summary> <h1>Transactions   </h1> This API is for managing and handling financial transactions. </summary>
 
 Base Url:
- ```”http://localhost:8000/api”```
+```
+”http://localhost:8000/api”
+```
+
+# 
+
 <details><summary>
 <h2>GET </h2> <h3>/transactions </h3> "Retrieve all transactions"
 </summary>
@@ -10,9 +15,7 @@ Base Url:
 ```
 GET http://localhost:8000/api/transactions    
 ```
-### URL '/transactions'
-### Method :'GET'
-### URL Params : None
+### Params : None
 ### Success Response
 1.Code:
 ```
@@ -65,15 +68,21 @@ GET http://localhost:8000/api/transactions
 "success": false,
 "transactions": []
 ```
+</details>
+
+#
+
 <details>
 
 #
+<summary>
+<h2>POST</h2> <h3>/transactions</h3> "Create New Transaction"
+</summary>
+
 ```
 POST http://localhost:8000/api/transactions    "Create New Transaction"
 ```
-### URL '/transactions'
-### Method :'POST'
-### URL Params : 
+### Params : 
 ```
 [ 
   'user_id' => 'required', 
@@ -150,13 +159,17 @@ POST http://localhost:8000/api/transactions    "Create New Transaction"
 "success": false,
 "message": "cannot create transaction"
 ```
+</details>
+
 #
+<details>
+<summary><h2>POST</h2><h3>/transactions/{id}</h3> "Update an existed Transaction"
+</summary>
+
 ```
 PUT http://localhost:8000/api/transactions/{id}    "Update an existed Transaction"
 ```
-### URL '/transactions/{id}'
-### Method :'PUT'
-### URL Params : 
+### Params : 
 ```
 Required: 'id = [integer]';
 ```
@@ -211,13 +224,18 @@ For Example: Update transaction amount
 "success": false,
 "message": "cannot update transaction"
 ```
+</details>
+
 #
+
+<details>
+<summary><h2>DELETE</h2><h3>/transactions/{id}</h3> "Delete an existed Transaction"
+</summary>
+
 ```
 DELETE http://localhost:8000/api/transactions/{id}    "Delete an existed Transaction"
 ```
-### URL '/transactions/{id}'
-### Method :'DELETE'
-### URL Params : 
+### Params : 
 ```
 Required: 'id = [integer]';
 ```
@@ -243,5 +261,6 @@ Required: 'id = [integer]';
 "success": false,
 "message": “transaction with ID: ‘{id}’ not found”.
 ```
+</details>
 
 </details>
