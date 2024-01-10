@@ -1,17 +1,17 @@
-# Users API Documentation
-
-### Overview: 
-This API is for managing and creating users
+<details><summary> <h1>Users API Documentation</h1> 
+This API is for managing and creating users</summary> 
 
 ### Base Url:
  ```”http://localhost:8000/api”```
 
+#
+
+<details><summary><h2>GET</h2><h3>/users</h3>"Retrieve all users"</summary>
+
 ```
-GET http://localhost:8000/api/users  "Retrieve all users"
+GET http://localhost:8000/api/users  
 ```
-### URL '/users'
-### Method :'GET'
-### URL Params : None
+### Params : None
 ### Success Response
 1.Code:
 ```
@@ -92,13 +92,16 @@ GET http://localhost:8000/api/users  "Retrieve all users"
 "success": false,
 "users": []
 ```
+</details>
+
 #
+
+<details><summary><h2>POST</h2><h3>/users</h3> "Create New User"</summary>
+
 ```
-POST http://localhost:8000/api/users  "Create New User"
+POST http://localhost:8000/api/users 
 ```
-### URL '/users'
-### Method :'POST'
-### URL Params : 
+### Required Params : 
 ```
 [ 
             'name'=>'required|string|max:255',
@@ -109,7 +112,7 @@ POST http://localhost:8000/api/users  "Create New User"
             'balance'=>'required|numeric'
 ];
 ```
-### Data Params : 
+### Params : 
 ```
 [ 
             'name'=>'mariam',
@@ -154,13 +157,16 @@ POST http://localhost:8000/api/users  "Create New User"
 "success": false,
 "message": "cannot create user"
 ```
+</details>
+
 #
+
+<details><summary><h2>PUT</h2><h3>/users/{id}</h3> "Update an existed User"</summary>
+
 ```
-PUT http://localhost:8000/api/users/{id}    "Update an existed User"
+PUT http://localhost:8000/api/users/{id}
 ```
-### URL '/users/{id}'
-### Method :'PUT'
-### URL Params : 
+### Params : 
 ```
 Required: 'id = [integer]';
 ```
@@ -212,12 +218,15 @@ For Example: Update transaction amount
 "success": false,
 "message": "cannot update user"
 ```
+</details>
+
 #
+
+<details><summary><h2>DELETE</h2><h3>/users/{id}</h3> "Delete an existed User"</summary>
+
 ```
-DELETE http://localhost:8000/api/users/{id}    "Delete an existed User"
+DELETE http://localhost:8000/api/users/{id}
 ```
-### URL '/users/{id}'
-### Method :'DELETE'
 ### URL Params : 
 ```
 Required: 'id = [integer]';
@@ -244,3 +253,8 @@ Required: 'id = [integer]';
 "success": false,
 "message": “user with ID: ‘{id}’ not found”.
 ```
+</details>
+
+#
+
+</details>
