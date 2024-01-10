@@ -94,7 +94,7 @@ GET http://localhost:8000/api/users  "Retrieve all users"
 ```
 #
 ```
-Post http://localhost:8000/api/users  "Create New User"
+POST http://localhost:8000/api/users  "Create New User"
 ```
 ### URL '/users'
 ### Method :'POST'
