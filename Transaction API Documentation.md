@@ -1,14 +1,14 @@
 <details>
-<summary> Transactions </summary>
-### Overview: 
-This API is for managing and handling financial transactions.
+<summary> <h1>Transactions   </h1> This API is for managing and handling financial transactions. </summary>
 
-### Base Url:
+Base Url:
  ```”http://localhost:8000/api”```
-## .GET
+<details><summary>
+<h2>GET </h2> <h3>/transactions </h3> "Retrieve all transactions"
+</summary>
 
 ```
-GET http://localhost:8000/api/transactions    "Retrieve all transactions"
+GET http://localhost:8000/api/transactions    
 ```
 ### URL '/transactions'
 ### Method :'GET'
@@ -65,6 +65,8 @@ GET http://localhost:8000/api/transactions    "Retrieve all transactions"
 "success": false,
 "transactions": []
 ```
+<details>
+
 #
 ```
 POST http://localhost:8000/api/transactions    "Create New Transaction"
