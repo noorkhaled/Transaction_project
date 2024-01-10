@@ -66,7 +66,7 @@ GET http://localhost:8000/api/transactions    "Retrieve all transactions"
 ```
 #
 ```
-Post http://localhost:8000/api/transactions    "Create New Transaction"
+POST http://localhost:8000/api/transactions    "Create New Transaction"
 ```
 ### URL '/transactions'
 ### Method :'POST'
