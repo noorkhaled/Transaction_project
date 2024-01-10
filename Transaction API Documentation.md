@@ -2,7 +2,12 @@
 
 ### Overview: 
 This API is for managing and handling financial transactions.
+<details>
+<summary>Click to expand/collapse</summary>
 
+This is the content that can be collapsed or expanded.
+
+</details>
 ### Base Url:
  ```”http://localhost:8000/api”```
 
