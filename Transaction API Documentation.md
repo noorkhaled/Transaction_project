@@ -163,7 +163,7 @@ POST http://localhost:8000/api/transactions    "Create New Transaction"
 
 #
 <details>
-<summary><h2>POST</h2><h3>/transactions/{id}</h3> "Update an existed Transaction"
+<summary><h2>PUT</h2><h3>/transactions/{id}</h3> "Update an existed Transaction"
 </summary>
 
 ```
